@@ -1,0 +1,9 @@
+defineerida erinevad m106\m107 vaartused igale feature typeile
+voimaldada erinevad tingimused erinevatele kihtide vahemikudele
+salvestab muudatustega faili uuenime all(FANM)
+komenteerib et tegu on koodi poolt sooritatud muudatusega uude muudetud faili
+kysib kasutajalt mis vaartused mingitele featuritele lahevad ning salvestab selle valiku
+GUI
+kui leitakse tyyp mida defineeritud ei ole siis annab
+prgramm sellest teada, ei muuda midagi ja jatkab tegevust
+proge avab file exploreri
