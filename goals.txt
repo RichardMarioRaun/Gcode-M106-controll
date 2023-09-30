@@ -43,10 +43,10 @@ side-thought prgramm voiks kysida seda config.txt faili sest kasutaja voib kasut
 erinevatele materjalidele. sellisel juhul ei peaks kasutaja sisestama igakord infot
 vaid kasutaja saab valida oma preset faili ja panna prgramm toole
 
-naide config.txt failile:
+naide M106config_ABSwhite.txt failile:
 
 M106 CONTROLL CONFIG
-MATERIAL: ABS
+MATERIAL: ABSwhite
 
 fanactiverange:
 
