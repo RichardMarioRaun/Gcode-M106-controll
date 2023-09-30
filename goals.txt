@@ -1,3 +1,29 @@
+a little info:
+when 3d printers print parts 
+that are only decorative, there is usually no extra controll needed. parts are printed with one fanspeed where
+the material isn't runny liquid and parts come out clean.
+Problem rises when printing parts that have to be structurally strong. hot an runny plastic has the ability to bind really well
+to layer below it, liquid plastic usally doesn't hold it's form and parts will go out of specs(not dimantionally accrute anymore).
+Therefor printing parts that are nice from outside, but has a strong binding between layers. That requires more precise partcooling fan speed controll.
+plan is to to cool the externalperimeter and overhang printing features while not cooling the structural internal perimeter and infill.
+this controll will have a huge effect on printing with ABS plycarbonate and other hightemp plastics that suffer from bad layer adhesion.
+
+what is this?
+
+short answer, this is a tool that gives the user ablity to
+controll their 3d printer part cooling fan. 3d printer must be using
+standard gcode format and the gcode file has to be made using prusaslicer.
+other slicers might work with some little tweeks. This program searches for ";TYPE:" in the gcode to distinguish between feature types.
+
+longterm goal is to automate the M106 and M107 injection into the gcode with an S modifier(fanspeed)
+S modifier could be defined by feature type (solidinfill, perimeter, overhang ect).
+These "rules" could be also set to certaint layers (specified by Z coordinate)
+These "rules" are saved as preset/log with the specified material name (ABS, spectrum PLA, ect) and can later be recalled.
+Presets can be later recalled by material name and can be edited temporarily or overwriten.
+in case there are no preset selected, there will be a new one created if user wishes so.
+in case a preset is made, it has to specify fan speeds for feature types, material name, fan operating range.
+
+
 defineerida erinevad m106\m107 vaartused igale feature typeile
 voimaldada erinevad tingimused erinevatele kihtide vahemikudele
 salvestab muudatustega faili uuenime all(FANM)
