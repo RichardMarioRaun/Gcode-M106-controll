@@ -32,36 +32,68 @@ for rida in fail:
     ajutine.append(realugeja)
     if rida == """;TYPE:External perimeter\n""":
         muutustvajavad.append(realugeja)
+
+    rida = rida.replace("'", "\\'").replace('"', '\\"')
     rida = rida.strip("\n").split(":")
+
     for sone in rida:
-        ajutine.append(sone)
-        if sone == ";TYPE":
-            print(f"rida: {realugeja} ja sone on {sone}")
+        sone = sone.replace("'", "\\'").replace('"', '\\"')
+        ajutine.append(str(sone))
     phonebook.append(ajutine)
 fail.close()
 
 # Kirjutab andmed listist faili
 
-
+y=0
 with open(path,"w+", encoding = "UTF-8") as fail:
-    for rida in fail:
-        if (failiKirjutamiseReaLugeja == muutustvajavad[muutustvajavadindeks]+1):
-            muutustvajavadindeks+=1
-            fail.write(soovitudTekst+"""\n""")
+    while (y< len(phonebook) + len(muutustvajavad)):
+        if (len(muutustvajavad)>muutustvajavadindeks):
+            if (failiKirjutamiseReaLugeja == muutustvajavad[muutustvajavadindeks]):
+                muutustvajavadindeks+=1
+                fail.write(soovitudTekst+"\n")
+            else:
+                ajutine2=""
+                for element in range(len(phonebook[failiKirjutamiseReaLugeja])):
+                    if element==0:
+                        continue
+                    else:
+                        if (phonebook[failiKirjutamiseReaLugeja][element]==";TYPE" and phonebook[failiKirjutamiseReaLugeja][element+1]=="External perimeter"):
+                            ajutine2 += (phonebook[failiKirjutamiseReaLugeja][element]+";")
+                        else:
+                            ajutine2+=phonebook[failiKirjutamiseReaLugeja][element]
+                fail.write(ajutine2+"\n")
+                failiKirjutamiseReaLugeja+=1
         else:
             ajutine2=""
-            for element in phonebook[failiKirjutamiseReaLugeja]:
-                ajutine2+=element
-            fail.write(ajutine2+"""\n""")
+            for element in range(len(phonebook[failiKirjutamiseReaLugeja])):
+                if element==0:
+                    continue
+                else:
+                    ajutine2+=phonebook[failiKirjutamiseReaLugeja][element]
+            fail.write(ajutine2+"\n")
             failiKirjutamiseReaLugeja+=1
+        y+=1
 
 
 
+print(f"Muutust vajas {muutustvajavad} elementi!")
+"""
+hasti=0
+jama=0
 
+for el in (phonebook):
+    for i in range(len(el)):
+        if i ==0:
+            continue
+        elif type(el[i]) != str:
+            jama+=1
+        else:
+            hasti+=1
 
+print(jama)
+print(hasti)
+"""
 
-
-print(muutustvajavad)
 # Teeb faili txt failist gcode'iks
 old_full_path = "/Users/ricky.raun/Documents/GitHub/Gcode-M106-controll/testmaterial/30cube_0.2mm_ABS_39m.txt"
 new_file_name = "30cube_0.2mm_ABS_39m.gcode"
