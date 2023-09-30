@@ -7,3 +7,32 @@ GUI
 kui leitakse tyyp mida defineeritud ei ole siis annab
 prgramm sellest teada, ei muuda midagi ja jatkab tegevust
 proge avab file exploreri
+
+koige moistlikum ma arvan on see et me tekitame
+NÖ logi faili mis oleks lih config.txt millel on kindel
+vormistus ja kindel sisu. kui seda faili pole siis ta teeb selle kui
+kasutaja on sisestanud soovitud andmed/muudatused ja jatab selle "meelde"
+
+side-thought prgramm voiks kysida seda config.txt faili sest kasutaja voib kasutada erinevaid preseti/tingimusi
+erinevatele materjalidele. sellisel juhul ei peaks kasutaja sisestama igakord infot
+vaid kasutaja saab valida oma preset faili ja panna prgramm toole
+
+naide config.txt failile:
+
+M106 CONTROLL CONFIG
+MATERIAL: ABS
+
+fanactiverange:
+
+min: 10%
+max: 100%
+
+featuretype:
+
+external perimeter = 15%
+perimete = 0%
+solidinfill = 0%
+overhang perimeter = 30%
+overhang infill = 20%
+top solidinfill = 10%
+---||--- = ---||---
