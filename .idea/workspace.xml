@@ -5,11 +5,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="71dfc91e-5b69-46e7-9d68-8e48df138f32" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/Gcode-M106-controll.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/Gcode-M106-controll.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Main.py" beforeDir="false" afterPath="$PROJECT_DIR$/Main.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/testmaterial/30cube_0.2mm_ABS_39m.txt" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -52,7 +49,8 @@
       <option name="presentableId" value="Default" />
       <updated>1696022339536</updated>
       <workItem from="1696022341402" duration="3408000" />
-      <workItem from="1696026092311" duration="938000" />
+      <workItem from="1696026092311" duration="1535000" />
+      <workItem from="1696098585414" duration="7005000" />
     </task>
     <servers />
   </component>
@@ -60,6 +58,6 @@
     <option name="version" value="3" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
-    <SUITE FILE_PATH="coverage/Gcode_M106_controll$Main.coverage" NAME="Main Coverage Results" MODIFIED="1696027013550" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/Gcode_M106_controll$Main.coverage" NAME="Main Coverage Results" MODIFIED="1696109246821" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
   </component>
 </project>
