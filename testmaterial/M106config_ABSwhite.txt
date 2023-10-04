@@ -1,0 +1,21 @@
+$M106 CONTROLL CONFIG
+$MATERIAL: ABSwhite
+
+$fanactiverange:
+
+min: 10%
+max: 100%
+
+$featuretype:
+
+Perimeter = 0
+Small perimeter = 10
+External perimeter = 20
+Infill = 0
+Solid infill = 0
+Top solid infill = 10
+Support material = 10
+Support materjal interface = 10
+Bridge = 10
+Gap fill = 10
+Ironing = 0
