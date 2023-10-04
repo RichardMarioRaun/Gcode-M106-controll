@@ -1,12 +1,7 @@
 $M106 CONTROLL CONFIG
 $MATERIAL: ABSwhite
 
-$fanactiverange:
-
-min: 10%
-max: 100%
-
-$featuretype:
+$featuretype(%):
 
 Perimeter = 0
 Small perimeter = 10
