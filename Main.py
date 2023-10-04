@@ -101,7 +101,7 @@ for rida in txt:
 
 editedgcode = '\n'.join(txtwchanged106n107)
 
-exitpath = r"C:\Users\Jan Markus\Documents\GitHub\Gcode-M106-controll\testmaterial\ylekirjutatudgcode.cgode"
+exitpath = r"C:\Users\Jan Markus\Documents\GitHub\Gcode-M106-controll\testmaterial\ylekirjutatudgcode.gcode"
 exitfail = open(exitpath,'w', encoding = "UTF-8")
 
 exitfail.write(editedgcode)
