@@ -62,3 +62,8 @@ overhang perimeter = 30%
 overhang infill = 20%
 top solidinfill = 10%
 ---||--- = ---||---
+
+
+teha korda logide majandus
+updatida logi failis featrueid
+failide ise tegemine ja ylekirjutamine
