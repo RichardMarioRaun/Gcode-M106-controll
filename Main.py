@@ -1,106 +1,59 @@
-import os
-# Teeb faili gcode'ist txt failiks
-old_full_path = "/Users/ricky.raun/Documents/GitHub/Gcode-M106-controll/testmaterial/30cube_0.2mm_ABS_39m.gcode"
-new_file_name = "30cube_0.2mm_ABS_39m.txt"
-directory = os.path.dirname(old_full_path)
-new_full_path = os.path.join(directory, new_file_name)
-try:
-    os.rename(old_full_path, new_full_path)
-    print(f"File '{old_full_path}' renamed to '{new_full_path}'.")
-except OSError as e:
-    print(f"Error renaming file: {e}")
-
-
-
-# Avab faili
-path = '/Users/ricky.raun/Documents/GitHub/Gcode-M106-controll/testmaterial/30cube_0.2mm_ABS_39m.txt'
+#failidest valja lugemine ja algne andme tootlus
+path = r"C:\Users\Jan Markus\gcodetest\30cube_0.5mm_ABS_13m.gcode"
 fail = open(path, encoding = "UTF-8")
 
-phonebook=[]
-muutustvajavad=[]
+txt = []
+typenr = []
 
-failiKirjutamiseReaLugeja=0
-muutustvajavadindeks=0
-
-soovitudTekst="M106 S126"
-
-# Loeb andmed failist listi
-realugeja=0
 for rida in fail:
-    ajutine=[]
-    realugeja+=1
-    ajutine.append(realugeja)
-    if rida == """;TYPE:External perimeter\n""":
-        muutustvajavad.append(realugeja)
-
-    rida = rida.replace("'", "\\'").replace('"', '\\"')
-    rida = rida.strip("\n").split(":")
-
-    for sone in rida:
-        sone = sone.replace("'", "\\'").replace('"', '\\"')
-        ajutine.append(str(sone))
-    phonebook.append(ajutine)
+    txt.append(rida.strip('\n'))
 fail.close()
 
-# Kirjutab andmed listist faili
+logpath = r"C:\Users\Jan Markus\gcodetest\M106config_ABSwhite.txt"
+logfail = open(logpath, encoding = "UTF-8")
 
-y=0
-with open(path,"w+", encoding = "UTF-8") as fail:
-    while (y< len(phonebook) + len(muutustvajavad)):
-        if (len(muutustvajavad)>muutustvajavadindeks):
-            if (failiKirjutamiseReaLugeja == muutustvajavad[muutustvajavadindeks]):
-                muutustvajavadindeks+=1
-                fail.write(soovitudTekst+"\n")
-            else:
-                ajutine2=""
-                for element in range(len(phonebook[failiKirjutamiseReaLugeja])):
-                    if element==0:
-                        continue
-                    else:
-                        if (phonebook[failiKirjutamiseReaLugeja][element]==";TYPE" and phonebook[failiKirjutamiseReaLugeja][element+1]=="External perimeter"):
-                            ajutine2 += (phonebook[failiKirjutamiseReaLugeja][element]+";")
-                        else:
-                            ajutine2+=phonebook[failiKirjutamiseReaLugeja][element]
-                fail.write(ajutine2+"\n")
-                failiKirjutamiseReaLugeja+=1
-        else:
-            ajutine2=""
-            for element in range(len(phonebook[failiKirjutamiseReaLugeja])):
-                if element==0:
-                    continue
-                else:
-                    ajutine2+=phonebook[failiKirjutamiseReaLugeja][element]
-            fail.write(ajutine2+"\n")
-            failiKirjutamiseReaLugeja+=1
-        y+=1
+logtxt = []
+
+for rida in logfail:
+    if rida != str('\n'):
+        logtxt.append(rida.strip('\n'))
+
+logfail.close()
+
+#ebavajalikud M106 ja M107 neutraliseerimised
+
+txtwmuted106n107 = []
+
+for rida in txt:
+    RN = rida.replace('M106', ';M106 edited')
+    RN = RN.replace('M107', ';M107 edited')
+    txtwmuted106n107.append(RN)
+
+#logidest saadud info sisestamine
 
 
 
-print(f"Muutust vajas {muutustvajavad} elementi!")
-"""
-hasti=0
-jama=0
+count = 0
+parandusliige = 0
+index = 1
+for rida in txt:
+    index += 1
+    RN = []
+    if rida.find(';TYPE:') == 0:
+        RN.append(str(index))
+        RN.append(rida)
+        count += 1
+        #print(rida)
+        typenr.append(RN)
 
-for el in (phonebook):
-    for i in range(len(el)):
-        if i ==0:
-            continue
-        elif type(el[i]) != str:
-            jama+=1
-        else:
-            hasti+=1
 
-print(jama)
-print(hasti)
-"""
 
-# Teeb faili txt failist gcode'iks
-old_full_path = "/Users/ricky.raun/Documents/GitHub/Gcode-M106-controll/testmaterial/30cube_0.2mm_ABS_39m.txt"
-new_file_name = "30cube_0.2mm_ABS_39m.gcode"
-directory = os.path.dirname(old_full_path)
-new_full_path = os.path.join(directory, new_file_name)
-try:
-    os.rename(old_full_path, new_full_path)
-    print(f"File '{old_full_path}' renamed to '{new_full_path}'.")
-except OSError as e:
-    print(f"Error renaming file: {e}")
+print(count)
+#vastus = []
+#for i in typenr:
+    #RN = ''
+    #RN = str('. real on'.join(i))
+    #vastus.append(RN)
+#print(txtwmuted106n107)
+print(logtxt)
+
