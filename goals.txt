@@ -65,5 +65,5 @@ top solidinfill = 10%
 
 
 teha korda logide majandus
-updatida logi failis featrueid
+updatida logi failis featrueid(korras ja testidu)
 failide ise tegemine ja ylekirjutamine
