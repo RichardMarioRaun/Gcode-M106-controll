@@ -1,4 +1,4 @@
-path = r"C:\Users\Jan Markus\Documents\GitHub\Gcode-M106-controll\testmaterial\karlireket_0.2mm_PETG_8h55m.gcode"
+path = r"C:\Users\Jan Markus\Documents\GitHub\Gcode-M106-controll\testmaterial\kylmikuriiul_0.2mm_PETG_15h14m.gcode"
 fail = open(path, encoding = "UTF-8")
 
 txt = []
@@ -12,4 +12,4 @@ for rida in txt:
     if rida.find(';TYPE:') == 0:
         typenr.add(str(rida[6:]))
 
-print(typenr)
+print('\n'.join(typenr))

@@ -43,20 +43,19 @@ for i in logid:
     if i == '0':
         logid[index] = 'M107 ;lisatud scriptipoolt'
     else:
-        logid[index] = f'M106 S{(float(i))/100*255} ;lisatud scriptipoolt'
+        logid[index] = f'M106 S{round((float(i))/100*255, ndigits=1)} ;lisatud scriptipoolt'
     index += 1
 
-Perimeter = logid[0]
-Smallperimeter = logid[1]
-Externalperimeter = logid[2]
-Infill = logid[3]
-Solidinfill = logid[4]
-Topsolidinfill = logid[5]
-Supportmaterial = logid[6]
-Supportmaterjalinterface = logid[7]
-Bridge = logid[8]
-Gapfill = logid[9]
-Ironing = logid[10]
+Externalperimeter = logid[0]
+Perimeter = logid[1]
+Overhangperimeter = logid[2]
+Internalinfill = logid[3]
+Topsolidinfill = logid[4]
+Solidinfill = logid[5]
+Supportmaterialinterface = logid[6]
+Supportmaterial = logid[7]
+SkirtBrim = logid[8]
+Bridgeinfill = logid[9]
 
 #logide rakendamine
 
@@ -64,27 +63,29 @@ txtwchanged106n107 = []
 
 for rida in txtwmuted106n107:
     txtwchanged106n107.append(rida)
-    if rida.find(';TYPE:') == 0:
-        if ('Perimeter' in rida):
-            txtwchanged106n107.append(Perimeter)
-        elif ('Small perimeter' in rida):
-            txtwchanged106n107.append(Smallperimeter)
-        elif ('External perimeter' in rida):
+    if rida.find(';TYPE:') == 0 and ('Custom' not in rida):
+        if ('External perimeter' in rida):
             txtwchanged106n107.append(Externalperimeter)
-        elif ('Infill' in rida):
-            txtwchanged106n107.append(Infill)
-        elif ('Solid infill' in rida):
-            txtwchanged106n107.append(Solidinfill)
+        elif ('Perimeter' in rida):
+            txtwchanged106n107.append(Perimeter)
+        elif ('Overhang perimeter' in rida):
+            txtwchanged106n107.append(Overhangperimeter)
+        elif ('Internal infill' in rida):
+            txtwchanged106n107.append(Internalinfill)
         elif ('Top solid infill' in rida):
             txtwchanged106n107.append(Topsolidinfill)
-        elif ('Support material' in rida):
-            txtwchanged106n107.append(Supportmaterial)
+        elif ('Solid infill' in rida):
+            txtwchanged106n107.append(Solidinfill)
         elif ('Support materjal interface' in rida):
             txtwchanged106n107.append(Supportmaterjalinterface)
-        elif ('Gap fill' in rida):
-            txtwchanged106n107.append(Gapfill)
-        elif ('Ironing' in rida):
-            txtwchanged106n107.append(Ironing)
+        elif ('Support material' in rida):
+            txtwchanged106n107.append(Supportmaterial)
+        elif ('Skirt/Brim' in rida):
+            txtwchanged106n107.append(SkirtBrim)
+        elif ('Bridge infill' in rida):
+            txtwchanged106n107.append(Bridgeinfill)
+        else:
+            print('Error: type not specified: ', rida)
 
 count = 0
 parandusliige = 0
@@ -115,5 +116,5 @@ exitfail.close()
 #print(txtwmuted106n107)
 #print(Infill)
 #print(logid)
-print(editedgcode)
+#print(editedgcode)
 
