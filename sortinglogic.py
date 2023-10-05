@@ -1,4 +1,5 @@
-path = r"C:\Users\Jan Markus\Documents\GitHub\Gcode-M106-controll\testmaterial\kylmikuriiul_0.2mm_PETG_15h14m.gcode"
+import tkinter.filedialog
+path = tkinter.filedialog.askopenfile()
 fail = open(path, encoding = "UTF-8")
 
 txt = []
