@@ -1,5 +1,5 @@
 #failidest valja lugemine ja algne andme tootlus
-path = r"C:\Users\Jan Markus\Documents\GitHub\Gcode-M106-controll\testmaterial\30cube_0.2mm_ABS_39m.gcode"
+path = r"C:\Users\Jan Markus\Documents\GitHub\Gcode-M106-controll\testmaterial\2509vaas275_0.2mm_PETG_10h6m.gcode"
 fail = open(path, encoding = "UTF-8")
 
 txt = []

@@ -3,10 +3,10 @@ when 3d printers print parts
 that are only decorative, there is usually no extra controll needed. parts are printed with one fanspeed where
 the material isn't runny liquid and parts come out clean.
 Problem rises when printing parts that have to be structurally strong. hot an runny plastic has the ability to bind really well
-to layer below it, liquid plastic usally doesn't hold it's form and parts will go out of specs(not dimantionally accrute anymore).
+to a layer below it, liquid plastic usally doesn't hold it's form and parts will go out of specs(not dimantionally accrute anymore).
 Therefor printing parts that are nice from outside, but has a strong binding between layers. That requires more precise partcooling fan speed controll.
 plan is to to cool the externalperimeter and overhang printing features while not cooling the structural internal perimeter and infill.
-this controll will have a huge effect on printing with ABS plycarbonate and other hightemp plastics that suffer from bad layer adhesion.
+this controll will have a huge effect on printing with ABS polycarbonate and other hightemp plastics that suffer from bad layer adhesion.
 
 what is this?
 
