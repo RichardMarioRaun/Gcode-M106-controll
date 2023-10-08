@@ -1,0 +1,16 @@
+$M106 CONTROLL CONFIG
+$MATERIAL: ABSwhite
+
+$@featuretype(%)(Zcordmm):[0\2];[^]
+
+External perimeter = 0;15
+Perimeter = 0;10
+Overhang perimeter = 0;25
+Internal infill = 0;0
+Top solid infill = 0;0
+Solid infill = 0;#
+Support material interface = 0;15
+Support material = 0;10
+Skirt/Brim = 0;10
+Bridge infill = 0;20
+
