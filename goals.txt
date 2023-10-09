@@ -67,3 +67,18 @@ top solidinfill = 10%
 teha korda logide majandus
 updatida logi failis featrueid(korras ja testidu)
 failide ise tegemine ja ylekirjutamine
+
+; stop printing object 30cube.STL id:0 copy 0
+;LAYER_CHANGE
+;Z:29.4
+;HEIGHT:0.199999
+;BEFORE_LAYER_CHANGE
+;29.4
+G92 E0
+;
+
+
+G1 Z29.4 F15000
+;AFTER_LAYER_CHANGE
+;29.4
+
