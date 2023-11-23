@@ -1,14 +1,15 @@
 import tkinter.filedialog
 
-print('vali gcode mida soovid muuta...')
-pathnimi = str(tkinter.filedialog.askopenfile())
-path = pathnimi.split("'")[1]
+input = ' '
+print('Vali gcode mida soovid muuta...')
+sorcepathnimi = str(tkinter.filedialog.askopenfile())
+sorcepath = sorcepathnimi.split("'")[1]
 
-print('vali preset fail...')
+print('Vali preset fail...')
 logpathnimi = str(tkinter.filedialog.askopenfile())
 logpath = logpathnimi.split("'")[1]
 
-print('vali targetfile millele muudatsed salvestatakse...')
+print('Vali target failile nimi mida muudetakse...')
 exitpathname = str(tkinter.filedialog.askopenfile())
 exitpath = exitpathname.split("'")[1]
 
@@ -130,4 +131,4 @@ def m106editor(path, logpath, exitpath):
     #print(editedgcode)
     return print('koik sai edukalt muudetud')
 
-m106editor(path, logpath, exitpath)
+m106editor(sorcepath, logpath, exitpath)
