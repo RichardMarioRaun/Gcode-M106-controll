@@ -1,16 +1,45 @@
 import tkinter.filedialog
 
-print('vali gcode mida soovid muuta...')
-pathnimi = str(tkinter.filedialog.askopenfile())
-path = pathnimi.split("'")[1]
+input = ' '
+print('Vali gcode mida soovid muuta...')
+sorcepathnimi = str(tkinter.filedialog.askopenfile())
+sorcepath = sorcepathnimi.split("'")[1]
 
-print('vali preset fail...')
+print('Vali preset fail...')
 logpathnimi = str(tkinter.filedialog.askopenfile())
 logpath = logpathnimi.split("'")[1]
 
-print('vali targetfile millele muudatsed salvestatakse...')
+print('Vali target failile nimi mida muudetakse...')
 exitpathname = str(tkinter.filedialog.askopenfile())
 exitpath = exitpathname.split("'")[1]
+
+class Zvahemik:
+    def __init__(self,vahemik, externalerimeter, perimeter, overhangPerimeter, onternalInfill,topSolidInfill,solidInfill,supportMaterialInterface,supportMaterial,skirtBrim,bridgeInfill):
+        self.vahemik = vahemik
+        self.externalerimeter = externalerimeter
+        self.perimeter=perimeter
+        self.overhangPerimeter=overhangPerimeter
+        self.onternalInfill=onternalInfill
+        self.topSolidInfill=topSolidInfill
+        self.solidInfill=solidInfill
+        self.supportMaterialInterface=supportMaterialInterface
+        self.supportMaterial=supportMaterial
+        self.skirtBrim=skirtBrim
+        self.bridgeInfill=bridgeInfill
+
+def gcode_tykeldamine(data):
+    vahmeikud = {}
+    vahemikRN = []
+    for rida in data:
+        if rida.index('G1 Z') == 0:
+            vahmeikud.update({rida.split(' ')[1]: vahemikRN})
+            vahemikRN = []
+        else:
+            vahemikRN.append(rida)
+    return vahmeikud
+
+def loesitta(sorcepath): #lits raisk
+    fail = open(sorcepath, encoding = 'UTF-8')
 
 def m106editor(path, logpath, exitpath):
     fail = open(path, encoding = "UTF-8")
@@ -130,4 +159,4 @@ def m106editor(path, logpath, exitpath):
     #print(editedgcode)
     return print('koik sai edukalt muudetud')
 
-m106editor(path, logpath, exitpath)
+m106editor(sorcepath, logpath, exitpath)
