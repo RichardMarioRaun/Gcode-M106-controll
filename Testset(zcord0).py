@@ -12,6 +12,7 @@ print('vali targetfile millele muudatsed salvestatakse...')
 exitpathname = str(tkinter.filedialog.askopenfile())
 exitpath = exitpathname.split("'")[1]
 
+def logide_luemine(logpath):
 def m106editor(path, logpath, exitpath):
     fail = open(path, encoding = "UTF-8")
 
@@ -22,8 +23,17 @@ def m106editor(path, logpath, exitpath):
         txt.append(rida.strip('\n'))
     fail.close()
 
+    #logpath = r"C:\Users\Jan Markus\gcodetest\M106config_ABSwhite.txt"
+    #logpath = r'C:\Users\Jan Markus\Documents\GitHub\Gcode-M106-controll\testmaterial\M106config_ABSwhite.txt'
+    logfail = open(logpath, encoding = "UTF-8")
 
+    logtxt = []
 
+    for rida in logfail:
+        if rida != str('\n'):
+            logtxt.append(rida.strip('\n'))
+
+    logfail.close()
 
     #ebavajalikud M106 ja M107 neutraliseerimised
 
@@ -35,47 +45,20 @@ def m106editor(path, logpath, exitpath):
         txtwmuted106n107.append(RN)
 
     #logidest saadud info sisestamine
-    logfail = open(logpath, encoding="UTF-8")
-
-    logtxt = []
-
-    for rida in logfail:
-        if rida != str('\n'):
-            logtxt.append(rida.strip('\n'))
-
-    logfail.close()
-    layerzones = []
     logid = []
 
     for rida in logtxt:
         if rida.find('$') != 0:
             logid.append(rida.split(' = ')[1])
-        elif rida.find('@') == 1:
-            layerzones.append(rida.split(':')[1])
-    element = 0
-    while element < len(logid):
-        RN = ((logid[element]).split(';'))
-        value = 0
-        while value < len(RN):
-            if RN[value] == '#':
-                RN[value] = RN[value-1]
-            value += 1
-        logid[element] = RN
-        element += 1
-
-
 
     #logide muutmine Gcodeile loetavaks formaadiks
-    element = 0
-    while element < len(logid):
-        index = 0
-        for i in logid[element]:
-            if ((logid[element])[index]) == '0':
-                (logid[element])[index] = 'M107 ;lisatud scriptipoolt'
-            else:
-                (logid[element])[index] = f'M106 S{round((float(i))/100*255, ndigits=1)} ;lisatud scriptipoolt'
-            index += 1
-        element += 1
+    index = 0
+    for i in logid:
+        if i == '0':
+            logid[index] = 'M107 ;lisatud scriptipoolt'
+        else:
+            logid[index] = f'M106 S{round((float(i))/100*255, ndigits=1)} ;lisatud scriptipoolt'
+        index += 1
 
     Externalperimeter = logid[0]
     Perimeter = logid[1]
