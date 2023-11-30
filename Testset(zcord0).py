@@ -12,7 +12,34 @@ print('vali targetfile millele muudatsed salvestatakse...')
 exitpathname = str(tkinter.filedialog.askopenfile())
 exitpath = exitpathname.split("'")[1]
 
-def logide_luemine(logpath):
+class kiht:
+    def __init__(self, start, end, externalperimeter, perimeter, overhangperimeter, internalinfill, topsolidinfill, solidinfill, supportmaterialinterface, supportmaterial, skirtbrim, bridgeinfill):
+        self.start = float(start)
+        self.end = floar(end)
+        self.externalperimeter = externalperimeter
+        self.perimeter = perimeter
+        self.overhangperimeter = overhangperimeter
+        self.internalinfill = internalinfill
+        self.topsolidinfill = topsolidinfill
+        self.solidinfill = solidinfill
+        self.supportmaterialinterface = supportmaterialinterface
+        self.supportmaterial = supportmaterial
+        self.skirtbrim = skirtbrim
+        self.bridgeinfill = bridgeinfill
+
+class conf:
+    def __init__(self, path):
+        self.path = path
+        self.kihid = []
+    def logread(self, path):
+        fail = open(path, encoding = 'UTF-8')
+        ridan = 0
+        for rida in fail:
+            if ridan == 0: ridan += 1 and continue
+            string = rida.strip('\n')
+            RN = string.split(',')
+
+def logide_lugemine(logpath):
 def m106editor(path, logpath, exitpath):
     fail = open(path, encoding = "UTF-8")
 
