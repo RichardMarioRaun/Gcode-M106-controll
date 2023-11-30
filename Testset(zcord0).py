@@ -1,68 +1,11 @@
 import tkinter.filedialog
 
-print('vali gcode mida soovid muuta...')
-pathnimi = str(tkinter.filedialog.askopenfile())
-path = pathnimi.split("'")[1]
-
-print('vali preset fail...')
-logpathnimi = str(tkinter.filedialog.askopenfile())
-logpath = logpathnimi.split("'")[1]
-
-print('vali targetfile millele muudatsed salvestatakse...')
-exitpathname = str(tkinter.filedialog.askopenfile())
-exitpath = exitpathname.split("'")[1]
-
-class kiht:
-    def __init__(self, start, end, externalperimeter, perimeter, overhangperimeter, internalinfill, topsolidinfill, solidinfill, supportmaterialinterface, supportmaterial, skirtbrim, bridgeinfill):
-        self.start = float(start)
-        self.end = floar(end)
-        self.externalperimeter = externalperimeter
-        self.perimeter = perimeter
-        self.overhangperimeter = overhangperimeter
-        self.internalinfill = internalinfill
-        self.topsolidinfill = topsolidinfill
-        self.solidinfill = solidinfill
-        self.supportmaterialinterface = supportmaterialinterface
-        self.supportmaterial = supportmaterial
-        self.skirtbrim = skirtbrim
-        self.bridgeinfill = bridgeinfill
-
-class conf:
-    def __init__(self, path):
-        self.path = path
-        self.kihid = []
-    def logread(self, path):
-        fail = open(path, encoding = 'UTF-8')
-        ridan = 0
-        for rida in fail:
-            if ridan == 0: ridan += 1 and continue
-            string = rida.strip('\n')
-            RN = string.split(',')
-
-def logide_lugemine(logpath):
-def m106editor(path, logpath, exitpath):
-    fail = open(path, encoding = "UTF-8")
-
+def sorceing(path):
+    fail = open(path, encoding="UTF-8")
     txt = []
-    typenr = []
-
     for rida in fail:
         txt.append(rida.strip('\n'))
     fail.close()
-
-    #logpath = r"C:\Users\Jan Markus\gcodetest\M106config_ABSwhite.txt"
-    #logpath = r'C:\Users\Jan Markus\Documents\GitHub\Gcode-M106-controll\testmaterial\M106config_ABSwhite.txt'
-    logfail = open(logpath, encoding = "UTF-8")
-
-    logtxt = []
-
-    for rida in logfail:
-        if rida != str('\n'):
-            logtxt.append(rida.strip('\n'))
-
-    logfail.close()
-
-    #ebavajalikud M106 ja M107 neutraliseerimised
 
     txtwmuted106n107 = []
 
@@ -70,35 +13,91 @@ def m106editor(path, logpath, exitpath):
         RN = rida.replace('M106', ';M106 removed by script')
         RN = RN.replace('M107', ';M107 removed by script')
         txtwmuted106n107.append(RN)
+    return txtwmuted106n107
 
-    #logidest saadud info sisestamine
-    logid = []
+def converting(arv):
+    if arv == '0':
+        return 'M107 ;lisatud scriptipoolt'
+    else:
+        return f'M106 S{round((float(i)) / 100 * 255, ndigits=1)} ;lisatud scriptipoolt'
+class Kiht:
+    def __init__(self, start, end, externalperimeter, perimeter, overhangperimeter, internalinfill, topsolidinfill, solidinfill, supportmaterialinterface, supportmaterial, skirtbrim, bridgeinfill):
+        self.start = start
+        self.end = end
+        self.externalperimeter = converting(int(externalperimeter))
+        self.perimeter = converting(int(perimeter))
+        self.overhangperimeter = converting(int(overhangperimeter))
+        self.internalinfill = converting(int(internalinfill))
+        self.topsolidinfill = converting(int(topsolidinfill))
+        self.solidinfill = converting(int(solidinfill))
+        self.supportmaterialinterface = converting(int(supportmaterialinterface))
+        self.supportmaterial = converting(int(supportmaterial))
+        self.skirtbrim = converting(int(skirtbrim))
+        self.bridgeinfill = converting(int(bridgeinfill))
 
-    for rida in logtxt:
-        if rida.find('$') != 0:
-            logid.append(rida.split(' = ')[1])
+    #hiljem tuleb teha ka kihiconf valja kirjutamine def
 
-    #logide muutmine Gcodeile loetavaks formaadiks
-    index = 0
-    for i in logid:
-        if i == '0':
-            logid[index] = 'M107 ;lisatud scriptipoolt'
-        else:
-            logid[index] = f'M106 S{round((float(i))/100*255, ndigits=1)} ;lisatud scriptipoolt'
-        index += 1
+class Conf:
+    def __init__(self, path):
+        self.path = path
+        self.kihid = []
+    def logread(self):
+        fail = open(self.path, encoding = 'UTF-8')
+        ridan = 0
+        for rida in fail:
+            if ridan == 0: ridan += 1
+            else:
+                string = rida.strip('\n')
+                RN = string.split(',')
+                vahemik = []
+                if RN[0] == '-' and len(self.kihid) == 0: vahemik.extend(['-', '-'])
+                elif RN[0][-1] == '-':
+                    vahemik.extend([float(RN[0].strip('-')[0]), '-'])
+                elif RN[0][0] == '-':
+                    vahemik.extend(['-', float(RN[0].strip('-')[0])])
+                else:
+                    vahemik.extend(RN[0].split('-'))
+                kiht = Kiht(vahemik[0], vahemik[1], RN[2], RN[3], RN[4], RN[5], RN[6], RN[7], RN[8], RN[9], RN[10], RN[11])
+                self.kihid.append(kiht)
 
-    Externalperimeter = logid[0]
-    Perimeter = logid[1]
-    Overhangperimeter = logid[2]
-    Internalinfill = logid[3]
-    Topsolidinfill = logid[4]
-    Solidinfill = logid[5]
-    Supportmaterialinterface = logid[6]
-    Supportmaterial = logid[7]
-    SkirtBrim = logid[8]
-    Bridgeinfill = logid[9]
+    def sliceselector(self, gslicepot):
+        guide = {}
+        RN = []
+        kihid = self.kihid.copy()
+        for gslice in gslicepot:
+            if (kihid[0].start <= gslice.zcord < kihid[0].end):
+                RN.extend(gslice)
+class Gslice:
+    def __init__(self, zcord):
+        self.zcord = float(zcord)
+        self.data = []
+def gcodeslice(txt):
+    gsliceRN = []
+    zcord = float(0)
+    gslicepot = []
+    for rida in txt:
+        if rida.index('G1 Z') == 0:
+            RN = Gslice(zcord)
+            RN.data.extend(gsliceRN)
+            gslicepot.append(RN)
+            if rida[4] == '.':
+                zcord = float((rida.split(' ')[1]).strip('Z.'))/10
+            else:
+                zcord = float((rida.split(' ')[1]).strip('Z'))
+        gsliceRN.append(rida)
+    return gslicepot
+def m106editor(gslice, conf):
 
-    #logide rakendamine
+    Externalperimeter = conf.externalperimeter
+    Perimeter = conf.perimeter
+    Overhangperimeter = conf.overhangperimeter
+    Internalinfill = conf.internalinfill
+    Topsolidinfill = conf.topsolidinfill
+    Solidinfill = conf.solidinfill
+    Supportmaterialinterface = conf.supportmaterialinterface
+    Supportmaterial = conf.supportmaterial
+    SkirtBrim = conf.skirtbrim
+    Bridgeinfill = conf.bridgeinfill
 
     txtwchanged106n107 = []
 
@@ -128,24 +127,7 @@ def m106editor(path, logpath, exitpath):
             else:
                 print('Error: type not specified: ', rida)
 
-    count = 0
-    parandusliige = 0
-    index = 1
-    for rida in txt:
-        index += 1
-        RN = []
-        if rida.find(';TYPE:') == 0:
-            RN.append(str(index))
-            RN.append(rida)
-            count += 1
-            #print(rida)
-            typenr.append(RN)
 
-    editedgcode = '\n'.join(txtwchanged106n107)
-
-    exitfail = open(exitpath,'w', encoding = "UTF-8")
-    exitfail.write(editedgcode)
-    exitfail.close()
     #print(count)
     #vastus = []
     #for i in typenr:
@@ -158,4 +140,27 @@ def m106editor(path, logpath, exitpath):
     #print(editedgcode)
     return print('koik sai edukalt muudetud')
 
-m106editor(path, logpath, exitpath)
+def director():
+    print('vali gcode mida soovid muuta...')
+    pathnimi = str(tkinter.filedialog.askopenfile())
+    path = pathnimi.split("'")[1]
+
+    print('vali preset fail...')
+    logpathnimi = str(tkinter.filedialog.askopenfile())
+    logpath = logpathnimi.split("'")[1]
+
+    print('vali targetfile millele muudatsed salvestatakse...')
+    exitpathname = str(tkinter.filedialog.askopenfile())
+    exitpath = exitpathname.split("'")[1]
+
+    conf = Conf(logpath)
+    conf.logread()
+    gpot = gcodeslice(sorceing(path))
+
+    exitgcode = []
+
+    for gslice in gpot:
+    exitfail = open(exitpath, 'w', encoding="UTF-8")
+    exitfail.write(exitgcode)
+    exitfail.close()
+
