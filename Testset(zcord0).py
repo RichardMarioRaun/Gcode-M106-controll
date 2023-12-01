@@ -19,7 +19,7 @@ def converting(arv):
     if arv == '0':
         return 'M107 ;lisatud scriptipoolt'
     else:
-        return f'M106 S{round((float(i)) / 100 * 255, ndigits=1)} ;lisatud scriptipoolt'
+        return f'M106 S{round((float(arv)) / 100 * 255, ndigits=1)} ;lisatud scriptipoolt'
 class Kiht:
     def __init__(self, start, end, externalperimeter, perimeter, overhangperimeter, internalinfill, topsolidinfill, solidinfill, supportmaterialinterface, supportmaterial, skirtbrim, bridgeinfill):
         self.start = start
@@ -50,23 +50,54 @@ class Conf:
                 string = rida.strip('\n')
                 RN = string.split(',')
                 vahemik = []
-                if RN[0] == '-' and len(self.kihid) == 0: vahemik.extend(['-', '-'])
+                if RN[0] == '-': #and len(self.kihid) == 0:
+                    vahemik.extend(['-', '-'])
                 elif RN[0][-1] == '-':
-                    vahemik.extend([float(RN[0].strip('-')[0]), '-'])
+                    vahemik.extend([float(RN[0].strip('-')), '-'])
                 elif RN[0][0] == '-':
-                    vahemik.extend(['-', float(RN[0].strip('-')[0])])
+                    vahemik.extend(['-', float(RN[0].strip('-'))])
                 else:
                     vahemik.extend(RN[0].split('-'))
-                kiht = Kiht(vahemik[0], vahemik[1], RN[2], RN[3], RN[4], RN[5], RN[6], RN[7], RN[8], RN[9], RN[10], RN[11])
+                    vahemik[0] = float(vahemik[0])
+                    vahemik[1] = float(vahemik[1])
+                kiht = Kiht(vahemik[0], vahemik[1], RN[1], RN[2], RN[3], RN[4], RN[5], RN[6], RN[7], RN[8], RN[9], RN[10])
                 self.kihid.append(kiht)
 
     def sliceselector(self, gslicepot):
-        guide = {}
+        guide = []
         RN = []
-        kihid = self.kihid.copy()
+        layers = self.kihid.copy()
+
+        if layers[0].start != '-':
+            start = layers[0].start
+        elif len(guide) == 0:
+            start = 0
+        else:
+            start = guide[-1][0].start
+        if layers[0].end != '-':
+            end = layers[0].end
+        else:
+            end = gslicepot[-1].zcord + 10
+
         for gslice in gslicepot:
-            if (kihid[0].start <= gslice.zcord < kihid[0].end):
-                RN.extend(gslice)
+            if start <= gslice.zcord < end:
+                RN.append(gslice)
+            else:
+                guide.append([layers[0], RN])
+                layers.remove(layers[0])
+
+                if layers[0].start != '-':
+                    start = layers[0].start
+
+                if layers[0].end != '-':
+                    end = layers[0].end
+                else:
+                    end = gslicepot[-1].zcord + 10
+                RN = []
+                RN.append(gslice)
+
+        return guide
+
 class Gslice:
     def __init__(self, zcord):
         self.zcord = float(zcord)
@@ -76,7 +107,7 @@ def gcodeslice(txt):
     zcord = float(0)
     gslicepot = []
     for rida in txt:
-        if rida.index('G1 Z') == 0:
+        if rida[0:4] == 'G1 Z':
             RN = Gslice(zcord)
             RN.data.extend(gsliceRN)
             gslicepot.append(RN)
@@ -101,7 +132,9 @@ def m106editor(gslice, conf):
 
     txtwchanged106n107 = []
 
-    for rida in txtwmuted106n107:
+
+    for i in gslice:
+        rida = i.data[0]
         txtwchanged106n107.append(rida)
         if rida.find(';TYPE:') == 0 and ('Custom' not in rida):
             if ('External perimeter' in rida):
@@ -126,19 +159,8 @@ def m106editor(gslice, conf):
                 txtwchanged106n107.append(Bridgeinfill)
             else:
                 print('Error: type not specified: ', rida)
-
-
-    #print(count)
-    #vastus = []
-    #for i in typenr:
-        #RN = ''
-        #RN = str('. real on'.join(i))
-        #vastus.append(RN)
-    #print(txtwmuted106n107)
-    #print(Infill)
-    #print(logid)
-    #print(editedgcode)
-    return print('koik sai edukalt muudetud')
+    print('koik sai edukalt muudetud')
+    return txtwchanged106n107
 
 def director():
     print('vali gcode mida soovid muuta...')
@@ -157,10 +179,15 @@ def director():
     conf.logread()
     gpot = gcodeslice(sorceing(path))
 
+    paarid = conf.sliceselector(gpot)
+
     exitgcode = []
 
-    for gslice in gpot:
+    for paar in paarid:
+        exitgcode.extend(m106editor(paar[1], paar[0]))
+
     exitfail = open(exitpath, 'w', encoding="UTF-8")
-    exitfail.write(exitgcode)
+    exitfail.write('\n'.join(exitgcode))
     exitfail.close()
 
+director()

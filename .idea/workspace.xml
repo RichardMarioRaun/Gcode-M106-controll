@@ -7,7 +7,7 @@
     <list default="true" id="71dfc91e-5b69-46e7-9d68-8e48df138f32" name="Changes" comment="jannubranch update tootav zcord search">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Testset(zcord0).py" beforeDir="false" afterPath="$PROJECT_DIR$/Testset(zcord0).py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/m106config.csv" beforeDir="false" afterPath="$PROJECT_DIR$/m106config.csv" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/m106config.csv" beforeDir="false" afterPath="$PROJECT_DIR$/testmaterial/m106config.csv" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -40,6 +40,9 @@
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
   </component>
+  <component name="ProblemsViewState">
+    <option name="selectedTabId" value="ProjectErrors" />
+  </component>
   <component name="ProjectColorInfo">{
   &quot;associatedIndex&quot;: 6
 }</component>
@@ -66,6 +69,9 @@
 }</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\Jan Markus\Documents\GitHub\Gcode-M106-controll\testmaterial" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
       <recent name="C:\Users\Jan Markus\Documents\GitHub\Gcode-M106-controll\testmaterial" />
     </key>
   </component>
@@ -153,7 +159,13 @@
       <option name="presentableId" value="LOCAL−00012" />
       <updated>1701351817141</updated>
     </task>
-    <option name="localTasksCounter" value="13" />
+    <task id="LOCAL−00013" summary="jannubranch update tootav zcord search">
+      <created>1701385141331</created>
+      <option name="number" value="LOCAL−00013" />
+      <option name="presentableId" value="LOCAL−00013" />
+      <updated>1701385141331</updated>
+    </task>
+    <option name="localTasksCounter" value="14" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
