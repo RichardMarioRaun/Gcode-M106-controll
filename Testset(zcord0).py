@@ -16,7 +16,7 @@ def sorceing(path):
     return txtwmuted106n107
 
 def converting(arv):
-    if arv == '0':
+    if arv == 0:
         return 'M107 ;lisatud scriptipoolt'
     else:
         return f'M106 S{round((float(arv)) / 100 * 255, ndigits=1)} ;lisatud scriptipoolt'
@@ -134,31 +134,31 @@ def m106editor(gslice, conf):
 
 
     for i in gslice:
-        rida = i.data[0]
-        txtwchanged106n107.append(rida)
-        if rida.find(';TYPE:') == 0 and ('Custom' not in rida):
-            if ('External perimeter' in rida):
-                txtwchanged106n107.append(Externalperimeter)
-            elif ('Perimeter' in rida):
-                txtwchanged106n107.append(Perimeter)
-            elif ('Overhang perimeter' in rida):
-                txtwchanged106n107.append(Overhangperimeter)
-            elif ('Internal infill' in rida):
-                txtwchanged106n107.append(Internalinfill)
-            elif ('Top solid infill' in rida):
-                txtwchanged106n107.append(Topsolidinfill)
-            elif ('Solid infill' in rida):
-                txtwchanged106n107.append(Solidinfill)
-            elif ('Support materjal interface' in rida):
-                txtwchanged106n107.append(Supportmaterialinterface)
-            elif ('Support material' in rida):
-                txtwchanged106n107.append(Supportmaterial)
-            elif ('Skirt/Brim' in rida):
-                txtwchanged106n107.append(SkirtBrim)
-            elif ('Bridge infill' in rida):
-                txtwchanged106n107.append(Bridgeinfill)
-            else:
-                print('Error: type not specified: ', rida)
+        for rida in i.data:
+            txtwchanged106n107.append(rida)
+            if rida.find(';TYPE:') == 0 and ('Custom' not in rida):
+                if ('External perimeter' in rida):
+                    txtwchanged106n107.append(Externalperimeter)
+                elif ('Perimeter' in rida):
+                    txtwchanged106n107.append(Perimeter)
+                elif ('Overhang perimeter' in rida):
+                    txtwchanged106n107.append(Overhangperimeter)
+                elif ('Internal infill' in rida):
+                    txtwchanged106n107.append(Internalinfill)
+                elif ('Top solid infill' in rida):
+                    txtwchanged106n107.append(Topsolidinfill)
+                elif ('Solid infill' in rida):
+                    txtwchanged106n107.append(Solidinfill)
+                elif ('Support materjal interface' in rida):
+                    txtwchanged106n107.append(Supportmaterialinterface)
+                elif ('Support material' in rida):
+                    txtwchanged106n107.append(Supportmaterial)
+                elif ('Skirt/Brim' in rida):
+                    txtwchanged106n107.append(SkirtBrim)
+                elif ('Bridge infill' in rida):
+                    txtwchanged106n107.append(Bridgeinfill)
+                else:
+                    print('Error: type not specified: ', rida)
     print('koik sai edukalt muudetud')
     return txtwchanged106n107
 
