@@ -4,10 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="71dfc91e-5b69-46e7-9d68-8e48df138f32" name="Changes" comment="jannubranch update tootav zcord search">
-      <change beforePath="$PROJECT_DIR$/Testset(zcord0).py" beforeDir="false" afterPath="$PROJECT_DIR$/Testset(zcord0).py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/m106config.csv" beforeDir="false" afterPath="$PROJECT_DIR$/m106config.csv" afterDir="false" />
-    </list>
+    <list default="true" id="71dfc91e-5b69-46e7-9d68-8e48df138f32" name="Changes" comment="jannubranch update tootav zcord search" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -152,7 +149,13 @@
       <option name="presentableId" value="LOCAL−00012" />
       <updated>1701351817141</updated>
     </task>
-    <option name="localTasksCounter" value="13" />
+    <task id="LOCAL−00013" summary="jannubranch update tootav zcord search">
+      <created>1701353570868</created>
+      <option name="number" value="LOCAL−00013" />
+      <option name="presentableId" value="LOCAL−00013" />
+      <updated>1701353570868</updated>
+    </task>
+    <option name="localTasksCounter" value="14" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
