@@ -4,12 +4,8 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="71dfc91e-5b69-46e7-9d68-8e48df138f32" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/Gcode-M106-controll.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/Gcode-M106-controll.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+    <list default="true" id="71dfc91e-5b69-46e7-9d68-8e48df138f32" name="Changes" comment="jannubranch update tootav zcord search">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Testset(zcord0).py" beforeDir="false" afterPath="$PROJECT_DIR$/Testset(zcord0).py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/testmaterial/ylekirjutatudgcode.gcode" beforeDir="false" afterPath="$PROJECT_DIR$/testmaterial/ylekirjutatudgcode.gcode" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -185,7 +181,14 @@
       <option name="presentableId" value="LOCAL−00013" />
       <updated>1701353570868</updated>
     </task>
-    <option name="localTasksCounter" value="14" />
+    <task id="LOCAL-00014" summary="jannubranch update tootav zcord search">
+      <created>1701439150086</created>
+      <option name="number" value="00014" />
+      <option name="presentableId" value="LOCAL-00014" />
+      <option name="project" value="LOCAL" />
+      <updated>1701439150086</updated>
+    </task>
+    <option name="localTasksCounter" value="15" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
