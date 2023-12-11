@@ -1,24 +1,52 @@
-import customtkinter
+import customtkinter as ctk
 import tkinter.filedialog
+import tkinter
 
-def confwizzardstart():
-    print("button clicked")
+class Pathnupp:
+    def __init__(self, button):
+        self.path_var = tkinter.StringVar()
+        self.path_var.set('vajuta, et valida fail')
+        self.sorcetrue = False
+        self.button = button
 
-def editorstart():
-    print('m106edit')
+    def update_label(self):
+        self.button.config(text=self.path_var.get())
 
-app = customtkinter.CTk()
-app.geometry("400x200")
+    def getsorce(self):
+        pathnimi = str(tkinter.filedialog.askopenfile())
+        self.path_var.set(pathnimi.split("'")[1])
+        self.sorcetrue = True
+        self.update_label()
 
-teatetekst = customtkinter.CTkLabel(app, text="Mis sa teha soovid?", fg_color="transparent")
-teatetekst.pack(padx=20, pady=20)
+def edit():
+    editwin = ctk.CTk()
+    editwin.geometry('800x400')
+    editwin.title('Failide valik')
 
-editornupp = customtkinter.CTkButton(app, text="Moondata Gcode faili valmis seadetega", fg_color=("#DB3E39", "#821D1A"), command=editorstart())
-#button = customtkinter.CTkButton(app, fg_color=("#DB3E39", "#821D1A"))  # tuple color
-editornupp.pack(padx=20, pady=10)
+    introrida = ctk.CTkFrame(editwin)
+    introtekst = ctk.CTkLabel(introrida, text='Vali vastavad failid ja vajuta start')
+    introtekst.pack(pady=5, side='left')
+    introrida.pack(pady=5)
 
-confwizzardnupp = customtkinter.CTkButton(app, text="Teha uued seaded", command=confwizzardstart())
-#button = customtkinter.CTkButton(app, fg_color=("#DB3E39", "#821D1A"))  # tuple color
-confwizzardnupp.pack(padx=20, pady=10)
+    sorcepath = Pathnupp(None)
 
-app.mainloop()
+    esimenerida = ctk.CTkFrame(editwin)
+    sorcefailtekst = ctk.CTkLabel(esimenerida, text='algne fail:')
+    sorcefailtekst.pack(padx=10, side='left')
+
+    sorcenupp = ctk.CTkButton(esimenerida, textvariable=sorcepath.path_var, command=sorcepath.getsorce)
+    sorcepath.button = sorcenupp  # Pass the button to the Pathnupp instance
+    sorcenupp.pack(padx=10)
+    esimenerida.pack()
+
+    editwin.mainloop()
+
+pea = ctk.CTk()
+pea.geometry('400x400')
+
+teade = ctk.CTkLabel(pea, text="Mis sa teha soovid?", fg_color="transparent")
+
+editstartnupp = ctk.CTkButton(pea, text='Moondata Gcode faili valmis seadetega', command=edit)
+editstartnupp.pack(padx=10, pady=10)
+
+pea.mainloop()
