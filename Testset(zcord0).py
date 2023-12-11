@@ -95,6 +95,7 @@ class Conf:
                     end = gslicepot[-1].zcord + 10
                 RN = []
                 RN.append(gslice)
+        guide.append([layers[0], RN])
 
         return guide
 
@@ -177,6 +178,7 @@ def director():
 
     conf = Conf(logpath)
     conf.logread()
+    print(len(conf.kihid))
     gpot = gcodeslice(sorceing(path))
 
     paarid = conf.sliceselector(gpot)
@@ -187,6 +189,7 @@ def director():
         exitgcode.extend(m106editor(paar[1], paar[0]))
 
     exitfail = open(exitpath, 'w', encoding="UTF-8")
+    exitfail.write('')
     exitfail.write('\n'.join(exitgcode))
     exitfail.close()
 
