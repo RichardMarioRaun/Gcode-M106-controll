@@ -1,5 +1,6 @@
 import customtkinter as ctk
 import tkinter.filedialog
+import objektid as obj
 #import editor
 
 class Pathnupp:

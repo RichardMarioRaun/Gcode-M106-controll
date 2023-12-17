@@ -5,23 +5,32 @@ import tkinter.filedialog
 #pathnimi = str(tkinter.filedialog.askopenfile())
 #path = pathnimi.split("'")[1]
 
-def button_callback():
-    print("button clicked")
+import tkinter as tk
 
-app = ctk.CTk()
-app.geometry("400x150")
+class CustomButton(ctk.CTkButton):
+    def __init__(self, master=None, **kwargs):
+        ctk.CTkButton.__init__(self, master, command=self.on_button_press, **kwargs)
+        self.default_text = kwargs.get('text', 'Click me!')
+        self.set_default_text()
 
-r = ['a', 'b', 'c', 'd']
-y = [1, 2, 3, 4]
+    def on_button_press(self):
+        current_text = self.cget('text')
+        if current_text == self.default_text:
+            new_text = 'Button Pressed!'
+        else:
+            new_text = self.default_text
+        self.configure(text=new_text)
 
-for rida in r:
-    f = ctk.CTkFrame(app)
-    for nr in y:
-        e = ctk.CTkLabel(f, text=f'{rida} {nr}')
-        e.pack(padx=5, pady=5, side='left')
-    f.pack(pady=5)
+    def set_default_text(self):
+        self.configure(text=self.default_text)
 
-button = ctk.CTkButton(app, text="my button", command= y[0] = 4)
-button.pack(padx=20, pady=20)
+# Create the main application window
+root = ctk.CTk()
+root.title("Custom Button Example")
 
-app.mainloop()
+# Create a custom button
+custom_button = CustomButton(root, text="Click me!", width=15)
+custom_button.pack(pady=20)
+
+# Run the Tkinter event loop
+root.mainloop()
