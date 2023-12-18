@@ -1,49 +1,115 @@
 import customtkinter as ctk
 import tkinter.filedialog
-import objektid as obj
-#import editor
+import editor as BE
 
-class Pathnupp:
-    def __init__(self):
-        self.path = 'vajuta, et valida fail'
-        self.sorcetrue = False
+class App(ctk.CTk):
+    def __init__(self, name, geom, **kwargs):
+        ctk.CTk.__init__(self,**kwargs)
+        self.title(name)
+        self.geometry(geom)
+        self.sorcepath = ''
+        self.logpath = ''
+        self.exitpath = ''
+        self.internal = []
+        introtxt = ctk.CTkLabel(self, text='Mis sa teha soovid?')
+        self.internal.append(introtxt)
+        editinitB = ctk.CTkButton(self, text='Moondata Gcode faili valmis seadetega', command=self.editbutton)
+        self.internal.append(editinitB)
+        confwizB = ctk.CTkButton(self, text='Teha uued seaded', command=self.confwiz)
+        self.internal.append(confwizB)
+        self.repack()
 
-    def getsorce(self):
+
+        self.sorceN = PathselectFr(self, 'Vali alusfail')
+        self.logN = PathselectFr(self, 'Vali seadete CSV fail')
+        self.exitN = PathselectFr(self, 'Vali väljundi fail')
+    def repack(self):
+        for asi in self.internal:
+            asi.pack(pady=10)
+    def depack(self):
+        for asi in self.internal:
+            asi.pack_forget()
+        self.internal = []
+
+    def restore(self):
+        self.depack()
+        self.sorcepath = ''
+        self.logpath = ''
+        self.exitpath = ''
+        introtxt = ctk.CTkLabel(self, text='Mis sa teha soovid?')
+        self.internal.append(introtxt)
+        editinitB = ctk.CTkButton(self, text='Moondata Gcode faili valmis seadetega', command=self.editbutton)
+        self.internal.append(editinitB)
+        confwizB = ctk.CTkButton(self, text='Teha uued seaded', command=self.confwiz)
+        self.internal.append(confwizB)
+        self.repack()
+    def editbutton(self):
+        self.depack()
+        exp = ctk.CTkLabel(self, text='Vali vastavad failid ja vajuta start')
+        self.internal.append(exp)
+        self.internal.append(self.sorceN)
+        self.internal.append(self.logN)
+        self.internal.append(self.exitN)
+        loppvalik = ctk.CTkFrame(self)
+        tagasiN = ctk.CTkButton(loppvalik, text='tagasi...', command=self.restore)
+        tagasiN.pack(padx=10, side='left')
+        startN = ctk.CTkButton(loppvalik, text='START', command=self.editstart)
+        startN.pack(padx=10, side='left')
+        self.internal.append(loppvalik)
+        self.repack()
+    def editstart(self):
+        self.sorcepath = self.sorceN.getpath()
+        self.logpath = self.logN.getpath()
+        self.exitpath = self.exitN.getpath()
+        valmis = ctk.CTkLabel(self, text='Valmis!')
+        viga = ctk.CTkLabel(self, text='Kõik failid pole valitud')
+
+        if len(self.internal) == 6:
+            (self.internal[-1]).pack_forget()
+            self.internal.remove(self.internal[-1])
+
+        if self.sorcepath and self.logpath and self.exitpath:
+            BE.director(self.sorcepath, self.logpath, self.exitpath)
+            self.internal.append(valmis)
+            valmis.pack(pady=10)
+
+            self.after(1000, self.editbutton)
+
+        else:
+            self.internal.append(viga)
+            viga.pack(pady=10)
+            self.after(1000, self.editbutton)
+            #if valmis in self.internal:
+                #self.internal.remove(valmis)
+    def confwiz(self):
+        self.depack()
+        self.repack()
+class PathselectFr(ctk.CTkFrame):
+    def __init__(self, master, note, **kwargs):
+        super().__init__(master, **kwargs)
+        self.path = ''
+        self.txt = ctk.CTkLabel(self, text=note)
+        self.txt.pack(padx=10, side = 'left')
+        self.B1 = ctk.CTkButton(self, text='Vajuta siia ja vali fail', command=self.pathselect)
+        self.B1.pack(padx=10, side = 'left')
+    def pathselect(self):
         pathnimi = str(tkinter.filedialog.askopenfile())
         self.path = pathnimi.split("'")[1]
-        self.sorcetrue = True
+        line = self.path.split('/')[-1]
+        self.B1.configure(text=line)
+    def restorename(self):
+        self.B1.configure(text='Vajuta siia ja vali fail')
 
-def edit():
-    print('tere')
-    editwin = ctk.CTk()
-    editwin.geometry('800x400')
-    editwin.title('Failide valik')
+    def getpath(self):
+        return self.path
 
-    introrida = ctk.CTkFrame(editwin)
-    introtekst = ctk.CTkLabel(introrida, text='Vali vastavad failid ja vajuta start')
-    introtekst.pack(pady=5, side='left')
-    introrida.pack(pady=5)
-
-    sorcepath = Pathnupp()
-
-    esimenerida = ctk.CTkFrame(editwin)
-    sorcefailtekst = ctk.CTkLabel(esimenerida, text='algne fail:')
-    sorcefailtekst.pack(padx=10, side='left')
-    sorcenupp = ctk.CTkButton(esimenerida, text=sorcepath.path, command=sorcepath.getsorce)
-    sorcenupp.pack(padx=10)
-    esimenerida.pack()
-
-    print(sorcepath.path)
-
-    editwin.mainloop()
+class Confrida(ctk.CTkFrame):
+    def __init__(self, master, **kwargs):
+        super().__init__(master, **kwargs)
+        self.start = '-'
+        self.end = '-'
+        self.param = {externalperimeter: 0, perimeter: 0, overhangperimeter: 0, internalinfill: 0, topsolidinfill: 0, solidinfill: 0, supportmaterialinterface: 0, supportmaterial: 0, skirtbrim: 0, bridgeinfill: 0
 
 
-pea = ctk.CTk()
-pea.geometry('400x400')
-
-teade = ctk.CTkLabel(pea, text="Mis sa teha soovid?", fg_color="transparent")
-
-editstartnupp = ctk.CTkButton(pea, text='Moondata Gcode faili valmis seadetega', command=edit)
-editstartnupp.pack(padx=10, pady=10)
-
-pea.mainloop()
+win = App('M106 editor', '800x300')
+win.mainloop()

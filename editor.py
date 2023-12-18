@@ -166,25 +166,13 @@ def m106editor(gslice, conf):
                     print('Error: type not specified: ', rida)
             elif ('END_PRINT' == rida):
                 txtwchanged106n107.append('M107 ;script end')
-    print('koik sai edukalt muudetud')
+    #print('koik sai edukalt muudetud')
     return txtwchanged106n107
 
-def director():
-    print('vali gcode mida soovid muuta...')
-    pathnimi = str(tkinter.filedialog.askopenfile())
-    path = pathnimi.split("'")[1]
-
-    print('vali preset fail...')
-    logpathnimi = str(tkinter.filedialog.askopenfile())
-    logpath = logpathnimi.split("'")[1]
-
-    print('vali targetfile millele muudatsed salvestatakse...')
-    exitpathname = str(tkinter.filedialog.askopenfile())
-    exitpath = exitpathname.split("'")[1]
+def director(path, logpath, exitpath):
 
     conf = Conf(logpath)
     conf.logread()
-    print(len(conf.kihid))
     gpot = gcodeslice(sorceing(path))
 
     paarid = conf.sliceselector(gpot)
@@ -199,4 +187,3 @@ def director():
     exitfail.write('\n'.join(exitgcode))
     exitfail.close()
 
-director()
