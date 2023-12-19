@@ -103,12 +103,42 @@ class PathselectFr(ctk.CTkFrame):
     def getpath(self):
         return self.path
 
-class Confrida(ctk.CTkFrame):
-    def __init__(self, master, **kwargs):
+class Conftabel(ctk.CTkFrame):
+    jarg = ['Vahemik', 'External perimeter', 'Perimeter', 'Overhang perimeter', 'Internal infill', 'Top solid infill', 'Solid infill', 'Support material interface', 'Support material', 'Skirt/Brim,Bridge infill']
+    def __init__(self, master, logipath=None, **kwargs):
         super().__init__(master, **kwargs)
-        self.start = '-'
-        self.end = '-'
-        self.param = {externalperimeter: 0, perimeter: 0, overhangperimeter: 0, internalinfill: 0, topsolidinfill: 0, solidinfill: 0, supportmaterialinterface: 0, supportmaterial: 0, skirtbrim: 0, bridgeinfill: 0
+        self.logipath = logipath
+        self.conftxt = []
+    def readconf(self):
+        logi = BE.Conf(self.logipath)
+        self.conftxt = []
+        for kiht in logi.kihid:
+            RN = []
+            RN.append(kiht.start)
+            Rn.append(kiht.end)
+            RN.append(BE.deconvert(kiht.externalperimeter))
+            RN.append(BE.deconvert(kiht.perimeter))
+            RN.append(BE.deconvert(kiht.overhangperimeter))
+            RN.append(BE.deconvert(kiht.internalinfill))
+            RN.append(BE.deconvert(kiht.topsolidinfill))
+            RN.append(BE.deconvert(kiht.solidinfill))
+            RN.append(BE.deconvert(kiht.supportmaterialinterface))
+            RN.append(BE.deconvert(kiht.supportmaterial))
+            RN.append(BE.deconvert(kiht.skirtbrim))
+            RN.append(BE.deconvert(kiht.bridgeinfill))
+            self.conftxt.append(RN)
+
+    def confrend(self):
+
+class confcolm(ctk.CTkFrame):
+    def __init__(self, master, defa=True, discr, values, **kwargs):
+        super().(master, **kwargs)
+        self.tyyp=defa
+        self.discr=discr
+        self.values=values
+        self.sisu = []
+
+    def ty1in(self):
 
 
 win = App('M106 editor', '800x300')

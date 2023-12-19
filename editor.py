@@ -20,6 +20,15 @@ def converting(arv):
         return 'M107 ;lisatud scriptipoolt'
     else:
         return f'M106 S{round((float(arv)) / 100 * 255, ndigits=1)} ;lisatud scriptipoolt'
+
+def deconvert(sone):
+    if sone == 'M107 ;lisatud scriptipoolt':
+        return 0
+    elif 'M106 S' in sone:
+        RN = sone.strip('M106 S')
+        RN = float(RN.strip(' ;lisatud scriptipoolt'))
+        value = (RN*100/255)
+        return round(value)
 class Kiht:
     def __init__(self, start, end, externalperimeter, perimeter, overhangperimeter, internalinfill, topsolidinfill, solidinfill, supportmaterialinterface, supportmaterial, skirtbrim, bridgeinfill):
         self.start = start
