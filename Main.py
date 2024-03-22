@@ -1,162 +1,101 @@
+import customtkinter as ctk
 import tkinter.filedialog
+import editor as BE
 
-input = ' '
-print('Vali gcode mida soovid muuta...')
-sorcepathnimi = str(tkinter.filedialog.askopenfile())
-sorcepath = sorcepathnimi.split("'")[1]
+class Mainwin(ctk.CTk):
+    def __init__(self, name, geom, **kwargs):
+        ctk.CTk.__init__(self,**kwargs)
+        self.title(name)
+        self.geometry(geom)
+        self.sorcepath = ''
+        self.logpath = ''
+        self.exitpath = ''
+        self.internal = []
+        self.sorceN = PathselectFr(self, 'Vali alusfail')
+        self.logN = PathselectFr(self, 'Vali seadete CSV fail')
+        self.exitN = PathselectFr(self, 'Vali väljundi fail')
+        self.editbutton()
 
-print('Vali preset fail...')
-logpathnimi = str(tkinter.filedialog.askopenfile())
-logpath = logpathnimi.split("'")[1]
 
-print('Vali target failile nimi mida muudetakse...')
-exitpathname = str(tkinter.filedialog.askopenfile())
-exitpath = exitpathname.split("'")[1]
 
-class Zvahemik:
-    def __init__(self,vahemik, externalerimeter, perimeter, overhangPerimeter, onternalInfill,topSolidInfill,solidInfill,supportMaterialInterface,supportMaterial,skirtBrim,bridgeInfill):
-        self.vahemik = vahemik
-        self.externalerimeter = externalerimeter
-        self.perimeter=perimeter
-        self.overhangPerimeter=overhangPerimeter
-        self.onternalInfill=onternalInfill
-        self.topSolidInfill=topSolidInfill
-        self.solidInfill=solidInfill
-        self.supportMaterialInterface=supportMaterialInterface
-        self.supportMaterial=supportMaterial
-        self.skirtBrim=skirtBrim
-        self.bridgeInfill=bridgeInfill
+    def repack(self):
+        for asi in self.internal:
+            asi.pack(pady=10)
+    def depack(self):
+        for asi in self.internal:
+            asi.pack_forget()
+        self.internal = []
 
-def gcode_tykeldamine(data):
-    vahmeikud = {}
-    vahemikRN = []
-    for rida in data:
-        if rida.index('G1 Z') == 0:
-            vahmeikud.update({rida.split(' ')[1]: vahemikRN})
-            vahemikRN = []
+    def restore(self):
+        self.depack()
+        self.sorcepath = ''
+        self.logpath = ''
+        self.exitpath = ''
+        introtxt = ctk.CTkLabel(self, text='Mis sa teha soovid?')
+        self.internal.append(introtxt)
+        editinitB = ctk.CTkButton(self, text='Moondata Gcode faili valmis seadetega', command=self.editbutton)
+        self.internal.append(editinitB)
+        #confwizB = ctk.CTkButton(self, text='Teha uued seaded', command=self.confwiz)
+        #self.internal.append(confwizB)
+        self.repack()
+    def editbutton(self):
+        self.depack()
+        exp = ctk.CTkLabel(self, text='Vali vastavad failid ja vajuta start')
+        self.internal.append(exp)
+        self.internal.append(self.sorceN)
+        self.internal.append(self.logN)
+        self.internal.append(self.exitN)
+        loppvalik = ctk.CTkFrame(self)
+        #tagasiN = ctk.CTkButton(loppvalik, text='tagasi...', command=self.restore)
+        #tagasiN.pack(padx=10, side='left')
+        startN = ctk.CTkButton(loppvalik, text='START', command=self.editstart)
+        startN.pack(padx=10, side='left')
+        self.internal.append(loppvalik)
+        self.repack()
+    def editstart(self):
+        self.sorcepath = self.sorceN.getpath()
+        self.logpath = self.logN.getpath()
+        self.exitpath = self.exitN.getpath()
+        valmis = ctk.CTkLabel(self, text='Valmis!')
+        viga = ctk.CTkLabel(self, text='Kõik failid pole valitud')
+
+        if len(self.internal) == 6:
+            (self.internal[-1]).pack_forget()
+            self.internal.remove(self.internal[-1])
+
+        if self.sorcepath and self.logpath and self.exitpath:
+            BE.director(self.sorcepath, self.logpath, self.exitpath)
+            self.internal.append(valmis)
+            valmis.pack(pady=10)
+
+            self.after(1000, self.editbutton)
+
         else:
-            vahemikRN.append(rida)
-    return vahmeikud
+            self.internal.append(viga)
+            viga.pack(pady=10)
+            self.after(1000, self.editbutton)
+            #if valmis in self.internal:
+                #self.internal.remove(valmis)
 
-def loesitta(sorcepath): #lits raisk
-    fail = open(sorcepath, encoding = 'UTF-8')
+class PathselectFr(ctk.CTkFrame):
+    def __init__(self, master, note, **kwargs):
+        super().__init__(master, **kwargs)
+        self.path = ''
+        self.txt = ctk.CTkLabel(self, text=note)
+        self.txt.pack(padx=10, side = 'left')
+        self.B1 = ctk.CTkButton(self, text='Vajuta siia ja vali fail', command=self.pathselect)
+        self.B1.pack(padx=10, side = 'left')
+    def pathselect(self):
+        pathnimi = str(tkinter.filedialog.askopenfile())
+        self.path = pathnimi.split("'")[1]
+        line = self.path.split('/')[-1]
+        self.B1.configure(text=line)
+    def restorename(self):
+        self.B1.configure(text='Vajuta siia ja vali fail')
 
-def m106editor(path, logpath, exitpath):
-    fail = open(path, encoding = "UTF-8")
+    def getpath(self):
+        return self.path
 
-    txt = []
-    typenr = []
 
-    for rida in fail:
-        txt.append(rida.strip('\n'))
-    fail.close()
-
-    #logpath = r"C:\Users\Jan Markus\gcodetest\M106config_ABSwhite.txt"
-    #logpath = r'C:\Users\Jan Markus\Documents\GitHub\Gcode-M106-controll\testmaterial\M106config_ABSwhite.txt'
-    logfail = open(logpath, encoding = "UTF-8")
-
-    logtxt = []
-
-    for rida in logfail:
-        if rida != str('\n'):
-            logtxt.append(rida.strip('\n'))
-
-    logfail.close()
-
-    #ebavajalikud M106 ja M107 neutraliseerimised
-
-    txtwmuted106n107 = []
-
-    for rida in txt:
-        RN = rida.replace('M106', ';M106 removed by script')
-        RN = RN.replace('M107', ';M107 removed by script')
-        txtwmuted106n107.append(RN)
-
-    #logidest saadud info sisestamine
-    logid = []
-
-    for rida in logtxt:
-        if rida.find('$') != 0:
-            logid.append(rida.split(' = ')[1])
-
-    #logide muutmine Gcodeile loetavaks formaadiks
-    index = 0
-    for i in logid:
-        if i == '0':
-            logid[index] = 'M107 ;lisatud scriptipoolt'
-        else:
-            logid[index] = f'M106 S{round((float(i))/100*255, ndigits=1)} ;lisatud scriptipoolt'
-        index += 1
-
-    Externalperimeter = logid[0]
-    Perimeter = logid[1]
-    Overhangperimeter = logid[2]
-    Internalinfill = logid[3]
-    Topsolidinfill = logid[4]
-    Solidinfill = logid[5]
-    Supportmaterialinterface = logid[6]
-    Supportmaterial = logid[7]
-    SkirtBrim = logid[8]
-    Bridgeinfill = logid[9]
-
-    #logide rakendamine
-
-    txtwchanged106n107 = []
-
-    for rida in txtwmuted106n107:
-        txtwchanged106n107.append(rida)
-        if rida.find(';TYPE:') == 0 and ('Custom' not in rida):
-            if ('External perimeter' in rida):
-                txtwchanged106n107.append(Externalperimeter)
-            elif ('Perimeter' in rida):
-                txtwchanged106n107.append(Perimeter)
-            elif ('Overhang perimeter' in rida):
-                txtwchanged106n107.append(Overhangperimeter)
-            elif ('Internal infill' in rida):
-                txtwchanged106n107.append(Internalinfill)
-            elif ('Top solid infill' in rida):
-                txtwchanged106n107.append(Topsolidinfill)
-            elif ('Solid infill' in rida):
-                txtwchanged106n107.append(Solidinfill)
-            elif ('Support materjal interface' in rida):
-                txtwchanged106n107.append(Supportmaterialinterface)
-            elif ('Support material' in rida):
-                txtwchanged106n107.append(Supportmaterial)
-            elif ('Skirt/Brim' in rida):
-                txtwchanged106n107.append(SkirtBrim)
-            elif ('Bridge infill' in rida):
-                txtwchanged106n107.append(Bridgeinfill)
-            else:
-                print('Error: type not specified: ', rida)
-
-    count = 0
-    parandusliige = 0
-    index = 1
-    for rida in txt:
-        index += 1
-        RN = []
-        if rida.find(';TYPE:') == 0:
-            RN.append(str(index))
-            RN.append(rida)
-            count += 1
-            #print(rida)
-            typenr.append(RN)
-
-    editedgcode = '\n'.join(txtwchanged106n107)
-
-    exitfail = open(exitpath,'w', encoding = "UTF-8")
-    exitfail.write(editedgcode)
-    exitfail.close()
-    #print(count)
-    #vastus = []
-    #for i in typenr:
-        #RN = ''
-        #RN = str('. real on'.join(i))
-        #vastus.append(RN)
-    #print(txtwmuted106n107)
-    #print(Infill)
-    #print(logid)
-    #print(editedgcode)
-    return print('koik sai edukalt muudetud')
-
-m106editor(sorcepath, logpath, exitpath)
+win = Mainwin('M106 editor', '800x300')
+win.mainloop()
