@@ -4,13 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="71dfc91e-5b69-46e7-9d68-8e48df138f32" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/Gcode-M106-controll.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/Gcode-M106-controll.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Testset(zcord0).py" beforeDir="false" afterPath="$PROJECT_DIR$/Testset(zcord0).py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/testmaterial/ylekirjutatudgcode.gcode" beforeDir="false" afterPath="$PROJECT_DIR$/testmaterial/ylekirjutatudgcode.gcode" afterDir="false" />
-    </list>
+    <list default="true" id="71dfc91e-5b69-46e7-9d68-8e48df138f32" name="Changes" comment="jannubranch update tootav zcord search" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -80,11 +74,11 @@
         <env name="PYTHONUNBUFFERED" value="1" />
       </envs>
       <option name="SDK_HOME" value="C:\Users\Jan Markus\PycharmProjects\pythonProject\venv\Scripts\python.exe" />
-      <option name="SDK_NAME" value="Python 3.11 (pythonProject)" />
       <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
       <option name="IS_MODULE_SDK" value="false" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
       <option name="SCRIPT_NAME" value="$PROJECT_DIR$/Testset(zcord0).py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
